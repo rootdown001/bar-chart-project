@@ -35,6 +35,8 @@ const yScale = d3.scaleLinear()
                  .domain([0, d3.max(dataset, (d) => d[1])])
                  .range([svg_h - padding, padding]);
 
+const yAxis = d3.axisLeft(yScale)
+
 
 console.log(yScale(250))
 
@@ -49,13 +51,18 @@ svg.selectAll("rect")
    .data(dataset)
    .enter()
    .append("rect")
-   .attr("x", (d, i) => i*30)
-   .attr("y", (d, i) => yScale(d[1]))
+   .attr("x", (d, i) => (i*30)+30)
+   .attr("y", (d, i) => yScale(d[1]+12))
    .attr("width",20)
    .attr("height", (d) => svg_h - yScale(d[1]))
    .attr("fill", "#2f4f4f")
    .attr("class", "bar")
    .append("title")
    .text((d) => d)
+
+svg.append("g")
+    .attr("transform", "translate(" + (padding) + ", 0)")
+    .call(yAxis)
+
 
 
