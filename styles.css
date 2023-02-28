@@ -1,16 +1,24 @@
-div {
+body {
     display:flex;
+    background-color: white;
 }
 
+#title {
+    text-align: center;
+    font-size: 2.5em;
+}
 
 svg {
-    background-color:lightgray;
+    background-color:hsl(0, 0%, 96%);
 
     margin-left: auto;
     margin-right: auto;
+    padding-left: 30px;
+    padding-right: 30px;
+
 }
 
 .bar:hover {
-    fill: hsl(180, 13%, 70%);
+    fill: hsl(180, 25%, 46%);
 }
 
