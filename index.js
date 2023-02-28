@@ -55,7 +55,11 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
         .attr("height", (d) => svg_h - yScale(d[1]))
         .attr("fill", "#2f4f4f")
         .attr("class", "bar")
+        // create data-date and data-gdp properties
+        .attr("data-date", (d, i) => d[0])
+        .attr("data-gdp",  (d, i) => d[1])
         // create tooltip
+        // TODO: improve tooltip with formatting and overlay
         .append("title")
         .text((d) => d)
 
@@ -73,10 +77,15 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
         .attr("id", "title")
         .text('GDP of the United States');
 
+        // add x axis 
+        svg.append("g")
+            .attr("id", "x-axis")
+        // TODO: call xAxis    
 
 
         // add y axis (adjusted with "8" so bars start visually nicely at y axis)
         svg.append("g")
+            .attr("id", "y-axis")
             .attr("transform", "translate(" + (paddingHor+8) + ", 0)")
             .call(yAxis)
 
