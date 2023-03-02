@@ -22,3 +22,7 @@ svg {
     fill: hsl(180, 25%, 46%);
 }
 
+#tooltip {
+    font-size: 3em;
+}
+

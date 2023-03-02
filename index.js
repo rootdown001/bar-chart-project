@@ -18,7 +18,8 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
         const barWidth = (svg_w-(paddingHor*2)) / dataObj.data.length
         // dataset = data object
         const dataset = dataObj.data;
-
+        // console.log("🚀 ~ file: index.js:21 ~ dataset:", dataset)
+        
 
         // const xScale = d3.scaleLinear()
         //                 .domain([0, d3.max(dataset. (d) => )])
@@ -50,25 +51,26 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
         // x adjusted for nice visual effect
         .attr("x", (d, i) => (i*3.8)+xAdj)
         // y adjusted to start visually well with bottom of bars
-        .attr("y", (d, i) => yScale(d[1])-paddingVert)
+        .attr("y", (d, i) => yScale(d[1]))
         .attr("width",barWidth)
-        .attr("height", (d) => svg_h - yScale(d[1]))
+        .attr("height", (d) => (svg_h - paddingVert)- yScale(d[1]))
         .attr("fill", "#2f4f4f")
         .attr("class", "bar")
         // create data-date and data-gdp properties
         .attr("data-date", (d, i) => d[0])
         .attr("data-gdp",  (d, i) => d[1])
         // create tooltip
-        // TODO: improve tooltip with formatting and overlay
-        .append("title")
-        .text((d) => d)
+        // TODO: change tooltip to mouseover as shown in chat gpt
+        //q.attr("title", (d) => d[0] + " $" +d[1])
+       
+        
 
         // add text for y axis
         svg.append('text')
         .attr('transform', 'rotate(-90)')
         .attr('x', -300)
         .attr('y', 80)
-        .text('Gross Domestic Product');
+        .text('Gross Domestic Product')
 
         // add text for y axis
         svg.append('text')
@@ -91,3 +93,4 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
 
 // leaving d3.json method
 })
+.catch(e => console.log(e));
