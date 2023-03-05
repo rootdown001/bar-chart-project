@@ -41,8 +41,12 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
                         .attr("width", svg_w)
                         .attr("height", svg_h)
 
-            
+        // select .forSvg to create a tooltip div
+        const tooltip = d3.select(".forSvg")
+                        .append("div")
+                        .attr("id", "tooltip")
 
+        // TODO: fix centering of svg holder
         // creat rect for each data point
         svg.selectAll("rect")
         .data(dataset)
@@ -60,8 +64,24 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
         .attr("data-date", (d, i) => d[0])
         .attr("data-gdp",  (d, i) => d[1])
         // create tooltip
-        // TODO: change tooltip to mouseover as shown in chat gpt
-        //q.attr("title", (d) => d[0] + " $" +d[1])
+        .on("mouseover", function(event, d) {
+            const myX = this.getAttribute('x');
+            //console.log("🚀 ~ file: index.js:71 ~ .on ~ myX:", myX)
+            // console.log("🚀 ~ file: index.js:70 ~ .on ~ event:", event)
+            
+            // console.log("🚀 ~ file: index.js:70 ~ .on ~ d:", d)
+             
+            tooltip.html(d[0] +  " $" + d[1])
+                    .style("display", "block")
+                    .style("left", myX + "px")
+                    .style("top", yScale(d[1]) + 25 + "px")
+            // TODO: fix position of tooltip
+
+
+        })
+        .on("mouseout", function() {
+            tooltip.style("display", "none")
+        })
        
         
 
