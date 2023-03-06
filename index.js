@@ -1,3 +1,4 @@
+
 // define w & h of svg
 const svg_w = 1100;
 const svg_h = 740;
@@ -7,9 +8,6 @@ const paddingVert = 30;
 
 // adjust on x axis to make bars start just after y axis
 const xAdj = paddingHor + 8;
-
-
-
 
 // entering d3.json method
 d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json")
@@ -26,21 +24,15 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
         for (let arr of dataTemp) {
             dataset.push([parseTime(arr[0]), arr[1], arr[0]])
         }
-        console.log("🚀 ~ file: index.js:21 ~ dataset:", dataset)
 
         // make array of just dates for d3.extent
         const justDates = [];
         for (let arr of dataset) {
             justDates.push(arr[0])
         }
-        //console.log("🚀 ~ file: index.js:35 ~ justDates:", justDates)
         
-        
-
         // determine earliest & latest date
-        const domainDates = d3.extent(justDates)
-        //console.log("🚀 ~ file: index.js:34 ~ domainDates:", domainDates)
-        
+        const domainDates = d3.extent(justDates) 
 
         // determin bar width based on how many data points in array
         const barWidth = (svg_w-(paddingHor*2)) / dataObj.data.length
@@ -57,13 +49,9 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
 
         // xAxis
         const xAxis = d3.axisBottom(xScale)
-        console.log("🚀 ~ file: index.js:60 ~ xAxis:", xAxis)
         
-
         // yAxis                 
         const yAxis = d3.axisLeft(yScale)
-
-
 
         // select element with class .forSvg to append svg
         const svg = d3.select(".forSvg")
@@ -92,22 +80,22 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
         // create data-date and data-gdp properties
         .attr("data-date", (d, i) => d[2])
         .attr("data-gdp",  (d, i) => d[1])
-        // create tooltip
+        // create tooltip box on mouseover
         .on("mouseover", function(event, d) {
+            // find the x attribute to use in the .html method
             const myX = this.getAttribute('x');
-            //console.log("🚀 ~ file: index.js:71 ~ .on ~ myX:", myX)
-            // console.log("🚀 ~ file: index.js:70 ~ .on ~ event:", event)
-            
-            // console.log("🚀 ~ file: index.js:70 ~ .on ~ d:", d)
-             
 
-            //TODO: fix formatting of $
-            tooltip.html(d[2] + "<br>" + " $" + d[1] + " Billion")
+            // use tooltip d3 object defined above and add .html to format
+            // format GDP number with toString to add thousands commas 
+            tooltip.html(d[2] + "<br>" + " $" + d[1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " Billion")
+                    // put display to "block" instead of none so it appears on mouseover
                     .style("display", "block")
                     .style("left", myX + "px")
                     .style("top", yScale(d[1]) + 25 + "px")
+                    // attr added to make it pass tests
                     .attr("data-date", d[2]);
         })
+        // put display back to none on mouseout
         .on("mouseout", function() {
             tooltip.style("display", "none")
         })
@@ -119,7 +107,7 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
         .attr('y', 80)
         .text('Gross Domestic Product')
 
-        // add text for y axis
+        // add text for title in svg
         svg.append('text')
         .attr('x', svg_w/2-200)
         .attr('y', 60)
@@ -130,8 +118,7 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
         svg.append("g")
             .attr("id", "x-axis")
             .attr("transform", "translate(" + 8  + ", " + (svg_h-paddingVert) + ")")
-            .call(xAxis)    
-
+            .call(xAxis);    
 
         // add y axis (adjusted with "8" so bars start visually nicely at y axis)
         svg.append("g")
@@ -141,4 +128,5 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
 
 // leaving d3.json method  
 })
+// log error to console
 .catch(e => console.log(e));
