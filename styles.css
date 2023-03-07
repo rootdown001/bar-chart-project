@@ -6,13 +6,16 @@ body {
 
 .holder {
     display: block;
-    width: 1400px;
+    width: 100vw;
+    height: 100vh;
 }
 
 .forSvg {
     margin-left: auto;
     margin-right: auto;
-    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
     width: 84%;
 }
 
@@ -22,6 +25,7 @@ body {
 }
 
 svg {
+    display:block;
     background-color:hsl(0, 0%, 96%);
     margin-left: auto;
     margin-right: auto;
